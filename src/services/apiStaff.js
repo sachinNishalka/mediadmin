@@ -42,3 +42,44 @@ export async function createStaff({
 
   return data;
 }
+
+export async function getAllStaff() {
+  const { data, error } = await supabase
+    .from("staff")
+    .select("*")
+    .order("first_name", { ascending: true });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
+
+export async function getStaffById(staffId) {
+  const { data, error } = await supabase
+    .from("staff")
+    .select(
+      `
+      *,
+      staff_duties (
+        id,
+        duty_date,
+        duty_time,
+        doctor:doctor_id (
+          id,
+          first_name,
+          last_name
+        )
+      )
+    `
+    )
+    .eq("id", staffId)
+    .single();
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data;
+}
