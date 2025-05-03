@@ -2,18 +2,26 @@ import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import {
   HomeIcon,
-  UserGroupIcon,
-  CalendarIcon,
-  ChartBarIcon,
+  UserPlusIcon,
+  ClipboardDocumentCheckIcon,
+  PencilSquareIcon,
+  CalendarDaysIcon,
   Cog6ToothIcon,
-  Bars3Icon,
+  ChartBarIcon,
   XMarkIcon,
+  Bars3Icon,
 } from "@heroicons/react/24/outline";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: HomeIcon },
-  { name: "Add Staff", href: "/staff/add", icon: UserGroupIcon },
-  { name: "Assign Duties", href: "/staff/duties", icon: CalendarIcon },
+  { name: "Add Staff", href: "/staff/add", icon: UserPlusIcon }, // Better than UserGroupIcon for "add"
+  {
+    name: "Assign Duties",
+    href: "/staff/duties",
+    icon: ClipboardDocumentCheckIcon,
+  }, // Clear "assignment" meaning
+  { name: "Edit Duties", href: "/staff/duties/edit", icon: PencilSquareIcon }, // More specific for editing
+  { name: "All Appointments", href: "/appointments", icon: CalendarDaysIcon }, // More obvious than ChartBarIcon
 ];
 
 const secondaryNavigation = [

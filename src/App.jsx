@@ -8,6 +8,8 @@ import Layout from "./components/Layout";
 import Home from "./pages/Home";
 import AddStaff from "./pages/AddStaff";
 import AssignDuties from "./pages/AssignDuties";
+import EditDuties from "./pages/EditDuties";
+import AllAppointments from "./pages/AllAppointments";
 
 function Staff() {
   return <div>Staff Page</div>;
@@ -25,6 +27,8 @@ export default function App() {
             <Route path="staff" element={<Staff />} />
             <Route path="staff/add" element={<AddStaff />} />
             <Route path="/staff/duties" element={<AssignDuties />} />
+            <Route path="/staff/duties/edit" element={<EditDuties />} />
+            <Route path="/appointments" element={<AllAppointments />} />
           </Route>
         </Routes>
       </BrowserRouter>

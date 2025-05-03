@@ -4,8 +4,7 @@ import { useGetAllStaff } from "../hooks/useGetAllStaff";
 import { useGetAllDoctors } from "../hooks/useGetAllDoctors";
 import { useCreateStaffDuty } from "../hooks/useCreateStaffDuty";
 import { toast } from "react-toastify";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import CustomCalendar from "../components/CustomCalendar";
 
 export default function AssignDuties() {
   const {
@@ -67,10 +66,12 @@ export default function AssignDuties() {
       return;
     }
 
-    const dayName = date.toLocaleDateString("en-US", { weekday: "lowercase" });
+    const dayName = date
+      .toLocaleDateString("en-US", { weekday: "long" })
+      .toLowerCase();
     if (!selectedDoctor?.available_days.includes(dayName)) {
       setSelectedDate({
-        value: "",
+        value: date,
         isValid: false,
         validationMessage: "Selected date is not available for this doctor",
       });
@@ -236,26 +237,12 @@ export default function AssignDuties() {
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Select Date
               </label>
-              <div className="relative">
-                <DatePicker
-                  selected={selectedDate.value}
-                  onChange={handleDateSelect}
-                  minDate={new Date()}
-                  placeholderText="Select available date"
-                  dateFormat="MMMM d, yyyy"
-                  className="w-full rounded-lg border-gray-200 px-4 py-2.5 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-200 bg-white"
-                  disabled={!selectedDoctor}
-                  inline
-                  calendarClassName="border-0 shadow-lg"
-                  filterDate={(date) => {
-                    if (!selectedDoctor) return false;
-                    const dayName = date.toLocaleDateString("en-US", {
-                      weekday: "lowercase",
-                    });
-                    return selectedDoctor.available_days.includes(dayName);
-                  }}
-                />
-              </div>
+              <CustomCalendar
+                selectedDate={selectedDate.value}
+                onDateSelect={handleDateSelect}
+                enabledDays={selectedDoctor?.available_days}
+                disabled={!selectedDoctor}
+              />
               {!selectedDate.isValid && (
                 <span className="text-red-500 text-xs mt-1">
                   {selectedDate.validationMessage}
