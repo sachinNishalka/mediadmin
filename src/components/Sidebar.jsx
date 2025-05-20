@@ -14,14 +14,15 @@ import {
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: HomeIcon },
-  { name: "Add Staff", href: "/staff/add", icon: UserPlusIcon }, // Better than UserGroupIcon for "add"
+  { name: "Add Staff", href: "/staff/add", icon: UserPlusIcon },
+  { name: "Add Doctor", href: "/doctors/add", icon: UserPlusIcon },
   {
     name: "Assign Duties",
     href: "/staff/duties",
     icon: ClipboardDocumentCheckIcon,
-  }, // Clear "assignment" meaning
-  { name: "Edit Duties", href: "/staff/duties/edit", icon: PencilSquareIcon }, // More specific for editing
-  { name: "All Appointments", href: "/appointments", icon: CalendarDaysIcon }, // More obvious than ChartBarIcon
+  },
+  { name: "Edit Duties", href: "/staff/duties/edit", icon: PencilSquareIcon },
+  { name: "All Appointments", href: "/appointments", icon: CalendarDaysIcon },
 ];
 
 const secondaryNavigation = [

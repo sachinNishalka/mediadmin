@@ -85,7 +85,7 @@ export default function AssignDuties() {
     });
   };
 
-  // Function to validate time
+  // Function to validate time and format it to HH:mm:ss
   const validateTime = (time) => {
     if (!time) {
       setSelectedTime({
@@ -96,8 +96,11 @@ export default function AssignDuties() {
       return;
     }
 
+    // Use the exact time and just append :00 if seconds are missing
+    const formattedTime = time.includes(":00") ? time : `${time}:00`;
+
     setSelectedTime({
-      value: time,
+      value: formattedTime,
       isValid: true,
       validationMessage: "",
     });
@@ -119,10 +122,19 @@ export default function AssignDuties() {
       return;
     }
 
+    // Format date to YYYY-MM-DD without timezone conversion
+    const formatDate = (date) => {
+      const d = new Date(date);
+      const year = d.getFullYear();
+      const month = String(d.getMonth() + 1).padStart(2, "0");
+      const day = String(d.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
+
     createNewDuty({
       staff_id: data.staff_id,
       doctor_id: data.doctor_id,
-      duty_date: selectedDate.value.toISOString().split("T")[0],
+      duty_date: formatDate(selectedDate.value),
       duty_time: selectedTime.value,
     });
 
@@ -261,20 +273,24 @@ export default function AssignDuties() {
                 Select Time Slot
               </label>
               <div className="grid grid-cols-3 gap-2">
-                {selectedDoctor?.available_time_slots?.map((time) => (
-                  <button
-                    key={time}
-                    type="button"
-                    onClick={() => handleTimeSelect(time)}
-                    className={`px-3 py-2 text-sm font-medium rounded-lg border ${
-                      selectedTime.value === time
-                        ? "bg-primary-50 border-primary-500 text-primary-600"
-                        : "border-gray-200 hover:bg-gray-50"
-                    }`}
-                  >
-                    {time}
-                  </button>
-                ))}
+                {selectedDoctor?.available_time_slots?.map((time) => {
+                  // Format display time (remove seconds if present)
+                  const displayTime = time.split(":").slice(0, 2).join(":");
+                  return (
+                    <button
+                      key={time}
+                      type="button"
+                      onClick={() => handleTimeSelect(time)}
+                      className={`px-3 py-2 text-sm font-medium rounded-lg border ${
+                        selectedTime.value.startsWith(displayTime)
+                          ? "bg-primary-50 border-primary-500 text-primary-600"
+                          : "border-gray-200 hover:bg-gray-50"
+                      }`}
+                    >
+                      {displayTime}
+                    </button>
+                  );
+                })}
               </div>
               {!selectedTime.isValid && (
                 <span className="text-red-500 text-xs mt-1">

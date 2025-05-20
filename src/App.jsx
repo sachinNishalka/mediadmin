@@ -10,6 +10,7 @@ import AddStaff from "./pages/AddStaff";
 import AssignDuties from "./pages/AssignDuties";
 import EditDuties from "./pages/EditDuties";
 import AllAppointments from "./pages/AllAppointments";
+import AddDoctor from "./pages/AddDoctor";
 
 function Staff() {
   return <div>Staff Page</div>;
@@ -29,6 +30,7 @@ export default function App() {
             <Route path="/staff/duties" element={<AssignDuties />} />
             <Route path="/staff/duties/edit" element={<EditDuties />} />
             <Route path="/appointments" element={<AllAppointments />} />
+            <Route path="/doctors/add" element={<AddDoctor />} />
           </Route>
         </Routes>
       </BrowserRouter>
